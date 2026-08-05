@@ -53,9 +53,7 @@ def termina():
     frame_teclado.place_forget()
     fim = CTkLabel(tela,text="Parabéns, Você Perdeu!",font=("Comic Sans MS", 30, "bold"))
     fim.place(relx=0.37, rely=0.5)
-    recomecar = CTkButton(tela,text="Jogar Novamente",command=inicia,width=80,height=40)
-    recomecar.place(relx=0.37, rely=0.6)
-    
+
     
 
   
