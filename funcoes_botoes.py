@@ -7,6 +7,8 @@ from random import *
 
 
 
+
+
 p_certa  = "STEAM"
 letras_erradas = []
 letras_digitadas = []
@@ -455,12 +457,12 @@ def apaga():
     if len(letras_digitadas)>0:
         letra_digitada = letras_digitadas[-1]
 
-
+letras_erradas1 = []
 letras_fixas = []
 
 def enter_func():
     global letra_atual,letra_digitada, linha_atual,acertou,palavra_chutada
-    
+
     if letra_atual < 5 or acertou == True:
         return
 
@@ -484,7 +486,7 @@ def enter_func():
     else:
         l_certa = CTkLabel(frame_escrita, text=f"____{palavra[0]}____", bg_color="darkred", fg_color="darkred", font=("Comic Sans MS", 20, "bold"))
         l_certa.grid(row=linha_atual, column=0, padx=0, pady=0)
-        letras_erradas.append(palavra[0])
+        letras_erradas1.append(palavra[0])
         letras_fixas.append(l_certa)
 
     #letra dois
@@ -499,7 +501,7 @@ def enter_func():
     else:
             l_certa = CTkLabel(frame_escrita, text=f"____{palavra[1]}____", bg_color="darkred", fg_color="darkred", font=("Comic Sans MS", 20, "bold"))
             l_certa.grid(row=linha_atual, column=1, padx=0, pady=0)
-            letras_erradas.append(palavra[1])
+            letras_erradas1.append(palavra[1])
             letras_fixas.append(l_certa)
 
     if palavra[2] == p_certa[2]:
@@ -513,7 +515,7 @@ def enter_func():
     else:
             l_certa = CTkLabel(frame_escrita, text=f"____{palavra[2]}____", bg_color="darkred", fg_color="darkred", font=("Comic Sans MS", 20, "bold"))
             l_certa.grid(row=linha_atual, column=2, padx=0, pady=0)
-            letras_erradas.append(palavra[2])
+            letras_erradas1.append(palavra[2])
             letras_fixas.append(l_certa)
 
 
@@ -529,7 +531,7 @@ def enter_func():
     else:
                 l_certa = CTkLabel(frame_escrita, text=f"____{palavra[3]}____", bg_color="darkred", fg_color="darkred", font=("Comic Sans MS", 20, "bold"))
                 l_certa.grid(row=linha_atual, column=3, padx=0, pady=0)
-                letras_erradas.append(palavra[3])
+                letras_erradas1.append(palavra[3])
                 letras_fixas.append(l_certa)
 
 
@@ -544,9 +546,10 @@ def enter_func():
     else:
                 l_certa = CTkLabel(frame_escrita, text=f"____{palavra[4]}____", bg_color="darkred", fg_color="darkred", font=("Comic Sans MS", 20, "bold"))
                 l_certa.grid(row=linha_atual, column=4, padx=0, pady=0)
-                letras_erradas.append(palavra[4])
+                letras_erradas1.append(palavra[4])
                 letras_fixas.append(l_certa)
-
+    for l in letras_erradas1:
+            atualiza_cor(l)
 
     if palavra[0] == p_certa[0] and palavra[1] == p_certa[1] and palavra[2] == p_certa[2] and palavra[3] == p_certa[3] and palavra[4] == p_certa[4]:
         acertou=True
@@ -566,16 +569,20 @@ mostra_acertos = CTkLabel(tela,text=f"Acertos:{acertos.get()}",font=("Comic Sans
 mostra_acertos.grid(row=0, column=0, padx=0, pady=0)
 
 def palavra_correta():
-    global acertos1, letra_atual,letras_digitadas, letra_digitada,acertou,linha_atual,p_certa
+    global acertos1, letra_atual,letras_digitadas, letra_digitada,acertou,linha_atual,p_certa, letras_erradas1
     if acertou == True:
         for letra in letras_digitadas:
             letra.grid_forget()
         letras_digitadas.clear()
-
+        for l in letras_erradas1:
+            atualiza_cor(l)
+        letras_erradas1 = []
         contador=0
         while letras_fixas:
             removida = letras_fixas.pop(contador)
             removida.grid_forget()
+
+        
             
         acertos1+=1
         acertos.set(acertos1)
@@ -585,6 +592,9 @@ def palavra_correta():
         palavra.clear()
         letra_digitada.grid_forget()
         mostra.grid_forget()
+        letras_erradas.clear()
+        letra_atual = 0
+        linha_atual = 0
         chama_mostra()
         if len(letras_digitadas)>0:
             letra_digitada = letras_digitadas[-1]
@@ -599,6 +609,134 @@ def perdeu():
     termina()
 
 
+def atualiza_cor(l):
+    if acertou == True:
+         dicionario_letras[l].configure(bg_color="#303030",fg_color="#525252")
+         return
+         
+    dicionario_letras[l].configure(bg_color="#161616",fg_color="#161616")
 
 
 
+q =  CTkButton(frame_teclado, text="Q",width=80,height=40,command=funcao_q,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+q.grid(row=0, column=0, padx=5, pady=5)
+
+
+
+w =  CTkButton(frame_teclado, text="W",width=80,height=40,command = funcao_w, bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+w.grid(row=0, column=1, padx=5, pady=5)
+
+e =  CTkButton(frame_teclado, text="E",command=funcao_e,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+e.grid(row=0, column=2, padx=5, pady=5)
+
+
+r = CTkButton(frame_teclado, text="R",command=funcao_r,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+r.grid(row=0, column=3, padx=5, pady=5)
+
+t = CTkButton(frame_teclado, text="T",command=funcao_t,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))   
+t.grid(row=0, column=4, padx=5, pady=5)
+
+y = CTkButton(frame_teclado, text="Y",command=funcao_y,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+y.grid(row=0, column=5, padx=5, pady=5)
+
+u = CTkButton(frame_teclado, text="U",command=funcao_u,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+u.grid(row=0, column=6, padx=5, pady=5)
+
+i= CTkButton(frame_teclado, text="I",command=funcao_i,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+i.grid(row=0, column=7, padx=5, pady=5)
+
+o = CTkButton(frame_teclado, text="O",command=funcao_o,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+o.grid(row=0, column=8, padx=5, pady=5)
+
+p = CTkButton(frame_teclado, text="P",command=funcao_p,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+p.grid(row=0, column=9, padx=5, pady=5)
+
+a = CTkButton(frame_teclado, text="A",command=funcao_a,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+a.grid(row=1, column=0, padx=5, pady=5)
+
+s = CTkButton(frame_teclado, text="S",command=funcao_s,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+s.grid(row=1, column=1, padx=5, pady=5)
+
+d = CTkButton(frame_teclado, text="D",command=funcao_d,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+d.grid(row=1, column=2, padx=5, pady=5)
+
+f = CTkButton(frame_teclado, text="F",command=funcao_f,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+f.grid(row=1, column=3, padx=5, pady=5)
+
+g = CTkButton(frame_teclado, text="G",command=funcao_g,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+g.grid(row=1, column=4, padx=5, pady=5)
+
+h = CTkButton(frame_teclado, text="H",command=funcao_h,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+h.grid(row=1, column=5, padx=5, pady=5)
+
+j = CTkButton(frame_teclado, text="J",command=funcao_j,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+j.grid(row=1, column=6, padx=5, pady=5)
+
+k = CTkButton(frame_teclado, text="K",command=funcao_k,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+k.grid(row=1, column=7, padx=5, pady=5)
+
+l = CTkButton(frame_teclado, text="L",command=funcao_l,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+l.grid(row=1, column=8, padx=5, pady=5)
+
+z = CTkButton(frame_teclado, text="Z",command=funcao_z,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+z.grid(row=2, column=0, padx=5, pady=5)
+
+x = CTkButton(frame_teclado, text="X",command=funcao_x,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+x.grid(row=2, column=1, padx=5, pady=5)
+
+c = CTkButton(frame_teclado, text="C",command=funcao_c,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+c.grid(row=2, column=2, padx=5, pady=5)
+
+v = CTkButton(frame_teclado, text="V",command=funcao_v,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+v.grid(row=2, column=3, padx=5, pady=5)
+
+b = CTkButton(frame_teclado, text="B",command=funcao_b,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+b.grid(row=2, column=4, padx=5, pady=5)
+
+n = CTkButton(frame_teclado, text="N",command=funcao_n,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+n.grid(row=2, column=5, padx=5, pady=5)
+
+m = CTkButton(frame_teclado, text="M",command=funcao_m,width=80,height=40,bg_color="#303030",fg_color="#525252",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+m.grid(row=2, column=6, padx=5, pady=5)
+
+backspace = CTkButton(frame_teclado, text="Delete",command=apaga,width=80,height=40,bg_color="#303030",fg_color="#6B0000",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+backspace.grid(row=2, column=7, padx=5, pady=5)
+
+enter = CTkButton(frame_teclado, text="ENTER",command=enter_func,width=80,height=40,bg_color="#303030",fg_color="#006411",border_width=2,border_color="#020202",font=("Comic Sans MS", 20, "bold"))
+enter.grid(row=2, column=8, padx=5, pady=5)
+
+dicionario_letras = { "A": a, "B": b, "C": c, "D": d, "E": e, "F": f,
+    "G": g, "H": h, "I": i, "J": j, "K": k, "L": l,
+    "M": m, "N": n, "O": o, "P": p, "Q": q, "R": r,
+    "S": s, "T": t, "U": u, "V": v, "W": w, "X": x,
+    "Y": y, "Z": z}
+
+tela.bind("<a>", lambda e: funcao_a())
+tela.bind("<b>", lambda e: funcao_b())
+tela.bind("<c>", lambda e: funcao_c())
+tela.bind("<d>", lambda e: funcao_d())
+tela.bind("<e>", lambda e: funcao_e())
+tela.bind("<f>", lambda e: funcao_f())
+tela.bind("<g>", lambda e: funcao_g())
+tela.bind("<h>", lambda e: funcao_h())
+tela.bind("<i>", lambda e: funcao_i())
+tela.bind("<j>", lambda e: funcao_j())
+tela.bind("<k>", lambda e: funcao_k())
+tela.bind("<l>", lambda e: funcao_l())
+tela.bind("<m>", lambda e: funcao_m())
+tela.bind("<n>", lambda e: funcao_n())
+tela.bind("<o>", lambda e: funcao_o())
+tela.bind("<p>", lambda e: funcao_p())
+tela.bind("<q>", lambda e: funcao_q())
+tela.bind("<r>", lambda e: funcao_r())
+tela.bind("<s>", lambda e: funcao_s())
+tela.bind("<t>", lambda e: funcao_t())
+tela.bind("<u>", lambda e: funcao_u())
+tela.bind("<v>", lambda e: funcao_v())
+tela.bind("<w>", lambda e: funcao_w())
+tela.bind("<x>", lambda e: funcao_x())
+tela.bind("<y>", lambda e: funcao_y())
+tela.bind("<z>", lambda e: funcao_z())
+
+tela.bind("<Return>", lambda e: enter_func())
+tela.bind("<BackSpace>", lambda e: apaga())

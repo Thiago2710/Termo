@@ -38,7 +38,6 @@ PALAVRAS = [
 
 
 palavras_possiveis = list(set(PALAVRAS))
-print(len(palavras_possiveis))
 
 
 

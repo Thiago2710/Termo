@@ -1,4 +1,3 @@
-from letras import *
 from tela import *
 from funcoes_botoes import *
 from labels_escrita import *

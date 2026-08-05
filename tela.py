@@ -66,3 +66,4 @@ tela.bind("<F11>", lambda e: tela.attributes('-fullscreen', True) or tela_cheia.
 
 
 
+
