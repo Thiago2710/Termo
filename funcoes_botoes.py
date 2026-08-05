@@ -601,7 +601,6 @@ def palavra_correta():
         acertou=False
         num = randint(0, 110)
         p_certa=palavras_possiveis[num]
-        print(p_certa)
     
 def perdeu():
     acertos1 = 0
